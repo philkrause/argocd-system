@@ -10,10 +10,9 @@ argocd-apps:
         selfHeal: true
 
   applications:
-    metrics-server:
-      namespace: kube-system
     argocd:
       namespace: argocd
+
     istio:
       namespace: "istio-system"
       ignoreDifferences:
@@ -21,6 +20,7 @@ argocd-apps:
           group: "*"
           jsonPointers:
             - /webhooks/0/failurePolicy
+
     metallb:
       namespace: metallb-system
       ignoreDifferences:
@@ -28,3 +28,6 @@ argocd-apps:
           group: "*"
           jsonPointers:
             - /spec/conversion/webhook/clientConfig
+
+    metrics-server:
+      namespace: kube-system
