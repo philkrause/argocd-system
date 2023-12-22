@@ -16,3 +16,5 @@ argocd-apps:
       namespace: argocd
     istio:
       namespace: istio
+    metallb:
+      namespace: metallb
