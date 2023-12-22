@@ -10,5 +10,5 @@ argocd-apps:
         selfHeal: true
 
   applications:
-    argocd:
-      namespace: argocd
+    metrics-server:
+      namespace: kube-system
