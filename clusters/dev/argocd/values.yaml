@@ -113,9 +113,6 @@ argocd:
         cpu: 150m
         memory: 200Mi
 
-  redis-ha:
-    enabled: true
-
     resources:
       limits:
         cpu: 200m
