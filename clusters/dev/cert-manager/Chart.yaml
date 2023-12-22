@@ -6,6 +6,6 @@ dependencies:
   - name: cert-manager
     version: "*"
     repository: "https://charts.jetstack.io" # https://artifacthub.io/packages/helm/cert-manager/cert-manager
-  - name: go-daddy-cert-manager
+  - name: godaddy-webhook
     version: "*"
     repository: "https://fred78290.github.io/cert-manager-webhook-godaddy" https://github.com/Fred78290/cert-manager-webhook-godaddy
