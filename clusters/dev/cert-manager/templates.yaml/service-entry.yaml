@@ -1,0 +1,16 @@
+---
+
+kind: ServiceEntry
+apiVersion: networking.istio.io/v1beta1
+metadata:
+  name: cert-manager-letsencrypt
+spec:
+  hosts:
+    - acme-v02.api.letsencrypt.org
+  ports:
+    - number: 443
+      protocol: HTTPS
+      name: https
+  resolution: DNS
+  exportTo:
+    - .

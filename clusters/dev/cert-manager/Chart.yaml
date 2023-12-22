@@ -1,0 +1,8 @@
+apiVersion: v2
+name: cert-manager
+version: 0.1.0
+appVersion: "1.0"
+dependencies:
+  - name: cert-manager
+    version: "*"
+    repository: "https://charts.jetstack.io" # https://artifacthub.io/packages/helm/cert-manager/cert-manager

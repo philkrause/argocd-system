@@ -12,7 +12,8 @@ argocd-apps:
   applications:
     argocd:
       namespace: argocd
-
+    cert-manager:
+      namespace: kube-system
     istio:
       namespace: "istio-system"
       ignoreDifferences:
@@ -20,7 +21,6 @@ argocd-apps:
           group: "*"
           jsonPointers:
             - /webhooks/0/failurePolicy
-
     metallb:
       namespace: metallb-system
       ignoreDifferences:
@@ -28,6 +28,5 @@ argocd-apps:
           group: "*"
           jsonPointers:
             - /spec/conversion/webhook/clientConfig
-
     metrics-server:
       namespace: kube-system
