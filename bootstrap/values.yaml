@@ -12,3 +12,5 @@ argocd-apps:
   applications:
     metrics-server:
       namespace: kube-system
+    argocd:
+      namespace: argocd
