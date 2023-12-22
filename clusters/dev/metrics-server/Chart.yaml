@@ -1,8 +1,0 @@
-apiVersion: v2
-name: metrics-server
-version: 0.1.0
-appVersion: "1.0"
-dependencies:
-  - name: metrics-server
-    version: "*"
-    repository: "https://kubernetes-sigs.github.io/metrics-server" # https://artifacthub.io/packages/helm/metrics-server/metrics-server
