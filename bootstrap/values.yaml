@@ -15,6 +15,16 @@ argocd-apps:
     argocd:
       namespace: argocd
     istio:
-      namespace: istio
+      namespace: "istio-system"
+      ignoreDifferences:
+        - kind: "ValidatingWebhookConfiguration"
+          group: "*"
+          jsonPointers:
+            - /webhooks/0/failurePolicy
     metallb:
-      namespace: metallb
+      namespace: metallb-system
+      ignoreDifferences:
+        - kind: "CustomResourceDefinition"
+          group: "*"
+          jsonPointers:
+            - /spec/conversion/webhook/clientConfig
