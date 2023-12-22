@@ -16,4 +16,4 @@ spec:
         key: fYftG1uFZYTQ_LRx5iH7KU6rR45YjAN2bka
         secretRef:
           name: GODADDY_TOKEN
-          key: secret
+          key: R5xJGK12LGeS1NbCZuBvhv
