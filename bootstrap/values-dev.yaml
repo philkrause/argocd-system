@@ -2,11 +2,6 @@ argocd-apps:
   default:
     pathPrefix: "clusters/dev"
 
-    # For testing - remove once finished
-    source:
-      targetRevision: develop
-
-
   applications:
     metrics-server:
       namespace: kube-system
