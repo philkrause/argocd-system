@@ -1,0 +1,8 @@
+apiVersion: v2
+name: metallb
+version: 0.1.0
+appVersion: "1.0"
+dependencies:
+  - name: metallb
+    version: "*"
+    repository: "https://metallb.github.io/metallb" # https://artifacthub.io/packages/helm/metallb/metallb
