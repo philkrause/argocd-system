@@ -54,13 +54,13 @@ argocd:
           Application details: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}?view=tree&resource=&conditions=true
 
   applicationSet:
-    replicas: 2
+    replicas: 1
 
   dex:
     servicePortHttpName: "tcp"
 
   controller:
-    replicas: 3
+    replicas: 1
 
     resources:
       limits:

@@ -1,0 +1,29 @@
+ingressgateway:
+  name: "istio-ingressgateway"
+
+  autoscaling:
+    minReplicas: 1
+    maxReplicas: 1
+
+egressgateway:
+  name: "istio-egressgateway"
+
+  service:
+    type: ClusterIP
+
+istiod:
+  sidecarInjectorWebhook:
+    enableNamespacesByDefault: true
+
+  global:
+    logAsJson: true
+    mountMtlsCerts: true
+
+  pilot:
+    autoscaleMin: 1
+    autoscaleMax: 1
+
+  meshConfig:
+    accessLogFile: /dev/stdout
+    defaultConfig:
+      holdApplicationUntilProxyStarts: true
