@@ -1,0 +1,17 @@
+argocd-apps:
+  default:
+    project: "default"
+    source:
+      repoURL: "git@github.com:philkrause/argocd-system.git"
+    revisionHistoryLimit: 10
+    syncPolicy:
+      automated:
+        prune: true
+        selfHeal: true
+
+  applications:
+    argocd:
+      namespace: argocd
+
+    metrics-server:
+      namespace: kube-system

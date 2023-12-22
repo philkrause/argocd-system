@@ -1,0 +1,12 @@
+metrics-server:
+  replicas: 1
+
+  args:
+    - --kubelet-insecure-tls
+    - --kubelet-preferred-address-types=InternalIP
+
+  metrics:
+    enabled: true
+
+  serviceMonitor:
+    enabled: true
