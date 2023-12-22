@@ -1,0 +1,125 @@
+argocd:
+  configs:
+    cm:
+      timeout.reconciliation: 30s
+      url: "https://argocd.clustergames.io"
+
+      resource.customizations: |
+
+      #   cert-manager.io/Certificate:
+      #     health.lua: |
+      #       hs = {}
+      #       if obj.status ~= nil then
+      #         if obj.status.conditions ~= nil then
+      #           for i, condition in ipairs(obj.status.conditions) do
+      #             if condition.type == "Ready" and condition.status == "False" then
+      #               hs.status = "Degraded"
+      #               hs.message = condition.message
+      #               return hs
+      #             end
+      #             if condition.type == "Ready" and condition.status == "True" then
+      #               hs.status = "Healthy"
+      #               hs.message = condition.message
+      #               return hs
+      #             end
+      #           end
+      #         end
+      #       end
+
+      #       hs.status = "Progressing"
+      #       hs.message = "Waiting for certificate"
+      #       return hs
+
+      # dex.config: |
+      #   logger:
+      #     level: debug
+      #     format: json
+      #   connectors:
+      #   - type: saml
+      #     id: saml
+      #     name: saml
+      #     config:
+      #       entityIssuer: https://argocd.devops.k8s.exzeo.io/api/dex/callback
+      #       ssoURL: $argocd-oidc:oidc-issuer
+      #       caData: $argocd-oidc:oidc-certificate
+      #       redirectURI: https://argocd.devops.k8s.exzeo.io/api/dex/callback
+      #       usernameAttr: email
+      #       emailAttr: email
+      #       groupsAttr: Group
+
+    rbac:
+      policy.default: role:admin
+    params:
+      server.insecure: true
+
+  notifications:
+    argocdUrl: "https://argocd.clustergames.io"
+
+    triggers:
+      defaultTriggers: |
+        - on-health-degraded
+        - on-sync-status-unknown
+        - on-sync-failed
+
+      trigger.on-health-degraded: |
+        - description: Application has degraded
+          send:
+            - app-health-degraded
+          when: app.status.health.status == 'Degraded'
+
+      trigger.on-sync-status-unknown: |
+        - description: Sync status is unknown
+          send:
+            - app-sync-status-unknown
+          when: app.status.sync.status == 'Unknown' and time.Now().Sub(time.Parse(app.status.operationState.startedAt)).Minutes() >= 10
+
+      trigger.on-sync-failed: |
+        - description: Sync has failed
+          send:
+            - app-sync-failed
+          when: app.status.operationState.phase in ['Error', 'Failed']
+
+    templates:
+
+      template.app-health-degraded: |
+        message: |
+          {{if eq .serviceType "slack"}}:error:{{end}} *{{.app.metadata.name}}* is currently in a degraded state due to one or more issues.
+          Application details: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}
+
+      template.app-sync-failed: |
+        message: |
+          {{if eq .serviceType "slack"}}:error:{{end}}  The sync operation of application *{{.app.metadata.name}}* has failed at {{.app.status.operationState.finishedAt}}
+          Sync operation details are available at: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true
+
+      template.app-sync-status-unknown: |
+        message: |
+          {{if eq .serviceType "slack"}}:question:{{end}} *{{.app.metadata.name}}* is currently in an *Unknown* state.
+          Application details: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}?view=tree&resource=&conditions=true
+
+  applicationSet:
+    replicas: 2
+
+  dex:
+    servicePortHttpName: "tcp"
+
+  controller:
+    replicas: 3
+
+    resources:
+      limits:
+        cpu: 200m
+        memory: 400Mi
+      requests:
+        cpu: 150m
+        memory: 200Mi
+
+  redis-ha:
+    enabled: true
+
+    resources:
+      limits:
+        cpu: 200m
+        memory: 400Mi
+      requests:
+        cpu: 150m
+        memory: 250Mi
