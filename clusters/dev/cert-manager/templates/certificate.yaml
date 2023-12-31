@@ -1,0 +1,12 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: wildcard-clustergames
+spec:
+  secretName: wildcard-clustergames-tls
+  renewBefore: 240h
+  dnsNames:
+  - '*.clustergames.com'
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

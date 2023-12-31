@@ -8,12 +8,7 @@ spec:
     email: krausefire@gmail.com
     privateKeySecretRef:
       name: cert-manager-pk
-    solvers:
-      - selector:
-        http01:
     dns01:
       godaddy:
         key: fYftG1uFZYTQ_LRx5iH7KU6rR45YjAN2bka
-        secretRef:
-          name: GODADDY_TOKEN
-          key: R5xJGK12LGeS1NbCZuBvhv
+        secret: R5xJGK12LGeS1NbCZuBvhv
