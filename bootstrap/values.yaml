@@ -14,13 +14,13 @@ argocd-apps:
       namespace: argocd
     cert-manager:
       namespace: kube-system
-    # istio:
-    #   namespace: "istio-system"
-    #   ignoreDifferences:
-    #     - kind: "ValidatingWebhookConfiguration"
-    #       group: "*"
-    #       jsonPointers:
-    #         - /webhooks/0/failurePolicy
+    istio:
+      namespace: "istio-system"
+      ignoreDifferences:
+        - kind: "ValidatingWebhookConfiguration"
+          group: "*"
+          jsonPointers:
+            - /webhooks/0/failurePolicy
     # metallb:
     #   namespace: metallb-system
     #   ignoreDifferences:
