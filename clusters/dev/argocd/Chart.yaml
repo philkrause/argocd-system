@@ -7,7 +7,7 @@ dependencies:
     version: "5.*"
     repository: "https://argoproj.github.io/argo-helm" # https://artifacthub.io/packages/helm/argo/argo-cd
     alias: argocd
-  - name: external-gw
-    alias: external-argocd
-    version: "*"
-    repository: "oci://ghcr.io/exzeo-devops/helm-charts"
+  # - name: external-gw
+  #   alias: external-argocd
+  #   version: "*"
+  #   repository: "oci://ghcr.io/exzeo-devops/helm-charts"
