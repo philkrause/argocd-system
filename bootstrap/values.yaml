@@ -14,6 +14,11 @@ argocd-apps:
       namespace: argocd
     cert-manager:
       namespace: cert-manager
+      ignoreDifferences:
+        - kind: "Certificate"
+          group: "*"
+          jsonPointers:
+            - /spec/duration
     istio:
       namespace: "istio-system"
       ignoreDifferences:
