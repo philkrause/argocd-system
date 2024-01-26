@@ -2,7 +2,7 @@ argocd:
   configs:
     cm:
       timeout.reconciliation: 30s
-      url: "https://argocd-dev.thejustinmitchell.com"
+      url: "https://argocd.clustergames.com"
 
     rbac:
       policy.default: role:admin
@@ -47,14 +47,14 @@ argocd:
     #     cpu: 150m
     #     memory: 250Mi
 
-external-argocd:
-  name: "argocd"
-  hosts:
-    - argocd-dev.thejustinmitchell.com
-  service:
-    destination:
-      host: argocd-server.argocd.svc.cluster.local
-      port: 443
+# external-argocd:
+#   name: "argocd"
+#   hosts:
+#     - argocd.clustergames.com
+#   service:
+#     destination:
+#       host: argocd-server.argocd.svc.cluster.local
+#       port: 443
 
 # argocd:
 #   configs:
