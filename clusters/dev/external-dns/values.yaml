@@ -1,0 +1,33 @@
+external-dns:
+  deploymentStrategy:
+    type: RollingUpdate
+
+  podLabels:
+    app: external-dns
+
+  domainFilters:
+    - clustergaming.com
+
+  provider: godaddy 
+  txtPrefix: external-dns.
+  txtOwnerId: home-dev
+  
+  extraArgs: 
+    - --godaddy-api-key=fYftG1uFZYTQ_GwA5mGmxxzUDQLNyxq3dHH
+    - --godaddy-api-secret=GB6nSmBseRvRZcNz3DRSYP
+
+  sources:
+    - service
+    - ingress
+    - istio-gateway
+
+  # serviceMonitor:
+  #   enabled: true
+
+  resources:
+    requests:
+      memory: "80Mi"
+      cpu: "25m"
+    limits:
+      memory: "125Mi"
+      cpu: "50m"
