@@ -2,78 +2,136 @@ argocd:
   configs:
     cm:
       timeout.reconciliation: 30s
-      url: "https://argocd.clustergames.io"
+      url: "https://argocd-dev.thejustinmitchell.com"
 
     rbac:
       policy.default: role:admin
     params:
       server.insecure: true
 
-  notifications:
-    argocdUrl: "https://argocd.clustergames.io"
-
-    triggers:
-      defaultTriggers: |
-        - on-health-degraded
-        - on-sync-status-unknown
-        - on-sync-failed
-
-      trigger.on-health-degraded: |
-        - description: Application has degraded
-          send:
-            - app-health-degraded
-          when: app.status.health.status == 'Degraded'
-
-      trigger.on-sync-status-unknown: |
-        - description: Sync status is unknown
-          send:
-            - app-sync-status-unknown
-          when: app.status.sync.status == 'Unknown' and time.Now().Sub(time.Parse(app.status.operationState.startedAt)).Minutes() >= 10
-
-      trigger.on-sync-failed: |
-        - description: Sync has failed
-          send:
-            - app-sync-failed
-          when: app.status.operationState.phase in ['Error', 'Failed']
-
-    templates:
-
-      template.app-health-degraded: |
-        message: |
-          {{if eq .serviceType "slack"}}:error:{{end}} *{{.app.metadata.name}}* is currently in a degraded state due to one or more issues.
-          Application details: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}
-
-      template.app-sync-failed: |
-        message: |
-          {{if eq .serviceType "slack"}}:error:{{end}}  The sync operation of application *{{.app.metadata.name}}* has failed at {{.app.status.operationState.finishedAt}}
-          Sync operation details are available at: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true
-
-      template.app-sync-status-unknown: |
-        message: |
-          {{if eq .serviceType "slack"}}:question:{{end}} *{{.app.metadata.name}}* is currently in an *Unknown* state.
-          Application details: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}?view=tree&resource=&conditions=true
-
   applicationSet:
     replicas: 1
 
-  dex:
-    servicePortHttpName: "tcp"
-
   controller:
     replicas: 1
+    # metrics:
+    #   enabled: true
+    #   serviceMonitor:
+    #     enabled: true
 
-    resources:
-      limits:
-        cpu: 200m
-        memory: 400Mi
-      requests:
-        cpu: 150m
-        memory: 200Mi
+  # server:
+    # metrics:
+    #   enabled: true
+    #   serviceMonitor:
+    #     enabled: true
 
-    resources:
-      limits:
-        cpu: 200m
-        memory: 400Mi
-      requests:
-        cpu: 150m
-        memory: 250Mi
+    # resources:
+    #   limits:
+    #     cpu: 200m
+    #     memory: 400Mi
+    #   requests:
+    #     cpu: 150m
+    #     memory: 200Mi
+
+  # repoServer:
+    # metrics:
+    #   enabled: true
+    #   serviceMonitor:
+    #     enabled: true
+
+    # resources:
+    #   limits:
+    #     cpu: 200m
+    #     memory: 400Mi
+    #   requests:
+    #     cpu: 150m
+    #     memory: 250Mi
+
+external-argocd:
+  name: "argocd"
+  hosts:
+    - argocd-dev.thejustinmitchell.com
+  service:
+    destination:
+      host: argocd-server.argocd.svc.cluster.local
+      port: 443
+
+# argocd:
+#   configs:
+#     cm:
+#       timeout.reconciliation: 30s
+#       url: "https://argocd.clustergames.io"
+
+#     rbac:
+#       policy.default: role:admin
+#     params:
+#       server.insecure: true
+
+#   notifications:
+#     argocdUrl: "https://argocd.clustergames.io"
+
+#     triggers:
+#       defaultTriggers: |
+#         - on-health-degraded
+#         - on-sync-status-unknown
+#         - on-sync-failed
+
+#       trigger.on-health-degraded: |
+#         - description: Application has degraded
+#           send:
+#             - app-health-degraded
+#           when: app.status.health.status == 'Degraded'
+
+#       trigger.on-sync-status-unknown: |
+#         - description: Sync status is unknown
+#           send:
+#             - app-sync-status-unknown
+#           when: app.status.sync.status == 'Unknown' and time.Now().Sub(time.Parse(app.status.operationState.startedAt)).Minutes() >= 10
+
+#       trigger.on-sync-failed: |
+#         - description: Sync has failed
+#           send:
+#             - app-sync-failed
+#           when: app.status.operationState.phase in ['Error', 'Failed']
+
+#     templates:
+
+#       template.app-health-degraded: |
+#         message: |
+#           {{if eq .serviceType "slack"}}:error:{{end}} *{{.app.metadata.name}}* is currently in a degraded state due to one or more issues.
+#           Application details: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}
+
+#       template.app-sync-failed: |
+#         message: |
+#           {{if eq .serviceType "slack"}}:error:{{end}}  The sync operation of application *{{.app.metadata.name}}* has failed at {{.app.status.operationState.finishedAt}}
+#           Sync operation details are available at: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}?operation=true
+
+#       template.app-sync-status-unknown: |
+#         message: |
+#           {{if eq .serviceType "slack"}}:question:{{end}} *{{.app.metadata.name}}* is currently in an *Unknown* state.
+#           Application details: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}?view=tree&resource=&conditions=true
+
+#   applicationSet:
+#     replicas: 1
+
+#   dex:
+#     servicePortHttpName: "tcp"
+
+#   controller:
+#     replicas: 1
+
+#     resources:
+#       limits:
+#         cpu: 200m
+#         memory: 400Mi
+#       requests:
+#         cpu: 150m
+#         memory: 200Mi
+
+#     resources:
+#       limits:
+#         cpu: 200m
+#         memory: 400Mi
+#       requests:
+#         cpu: 150m
+#         memory: 250Mi
