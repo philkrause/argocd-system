@@ -13,7 +13,7 @@ argocd-apps:
     argocd:
       namespace: argocd
     cert-manager:
-      namespace: kube-system
+      namespace: cert-manager
     istio:
       namespace: "istio-system"
       ignoreDifferences:
