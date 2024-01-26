@@ -11,5 +11,5 @@ cert-manager:
       sidecar.istio.io/inject: "false"
 
 godaddy-webhook:
-  groupName: acme.clustergames.com
+  groupName: acme.clustergaming.com
 

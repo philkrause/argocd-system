@@ -3,7 +3,7 @@ kind: ClusterRole
 metadata:
   name: dns-challenge-missing-role
 rules:
-- apiGroups: ["acme.clustergames.com"] # "" indicates the core API group
+- apiGroups: ["acme.clustergaming.com"] # "" indicates the core API group
   resources: ["godaddy"]
   verbs: ["*"]
 ---

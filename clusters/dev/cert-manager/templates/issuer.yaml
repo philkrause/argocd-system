@@ -17,5 +17,5 @@ spec:
                 key: token
               production: true
               ttl: 600
-            groupName: acme.clustergames.com
+            groupName: acme.clustergaming.com
             solverName: godaddy

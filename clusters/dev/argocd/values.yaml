@@ -2,7 +2,7 @@ argocd:
   configs:
     cm:
       timeout.reconciliation: 30s
-      url: "https://argocd.clustergames.com"
+      url: "https://argocd.clustergaming.com"
 
     rbac:
       policy.default: role:admin
@@ -50,7 +50,7 @@ argocd:
 external-argocd:
   name: "argocd"
   hosts:
-    - argocd.clustergames.com
+    - argocd.clustergaming.com
   service:
     destination:
       host: argocd-server.argocd.svc.cluster.local
@@ -60,7 +60,7 @@ external-argocd:
 #   configs:
 #     cm:
 #       timeout.reconciliation: 30s
-#       url: "https://argocd.clustergames.io"
+#       url: "https://argocd.clustergaming.io"
 
 #     rbac:
 #       policy.default: role:admin
@@ -68,7 +68,7 @@ external-argocd:
 #       server.insecure: true
 
 #   notifications:
-#     argocdUrl: "https://argocd.clustergames.io"
+#     argocdUrl: "https://argocd.clustergaming.io"
 
 #     triggers:
 #       defaultTriggers: |
