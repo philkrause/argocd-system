@@ -37,3 +37,10 @@ argocd-apps:
       namespace: kube-system
     external-dns:
       namespace: kube-system
+    vault:
+      namespace: vault
+      ignoreDifferences:
+        - kind: "MutatingWebhookConfiguration"
+          group: "*"
+          jsonPointers:
+            - /webhooks/0/clientConfig/caBundle
