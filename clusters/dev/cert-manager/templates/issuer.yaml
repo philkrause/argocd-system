@@ -5,10 +5,17 @@ metadata:
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
-    email: "krausefire@gmail.com"
+    email: krausefire@gmail.com
     privateKeySecretRef:
-      name: cert-manager-pk
+      name: letsencrypt-production
     solvers:
       - dns01:
-          route53:
-            region: us-east-1
+          webhook:
+            config:
+              apiKeySecretRef:
+                name: godaddy-api-key
+                key: token
+              production: true
+              ttl: 600
+            groupName: acme.clustergames.com
+            solverName: godaddy
