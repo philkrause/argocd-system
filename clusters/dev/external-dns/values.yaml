@@ -13,9 +13,20 @@ external-dns:
   txtOwnerId: home-dev
   
   extraArgs: 
-    - --godaddy-api-key=fYftG1uFZYTQ_GwA5mGmxxzUDQLNyxq3dHH
-    - --godaddy-api-secret=GB6nSmBseRvRZcNz3DRSYP
+    - --godaddy-api-key=$(godaddy_key)
+    - --godaddy-api-secret=$(godaddy_secret)
 
+  env:
+    - name: godaddy_key
+      valueFrom:
+        secretKeyRef:
+          name: godaddy-api-key
+          key: key
+    - name: godaddy_secret
+      valueFrom:
+        secretKeyRef:
+          name: godaddy-api-key
+          key: secret
   sources:
     - service
     - ingress
