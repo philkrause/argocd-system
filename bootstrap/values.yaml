@@ -30,3 +30,5 @@ argocd-apps:
             - /spec/conversion/webhook/clientConfig
     metrics-server:
       namespace: kube-system
+    external-dns:
+      namespace: kube-system
